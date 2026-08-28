@@ -67,7 +67,7 @@ export const envConfig = {
     LEARN_BASE_URL: env.LEARN_BASE_URL || `${internalServiceProtocol}://userorg-service:9000`,
     KNOWLG_MW_BASE_URL: env.KNOWLG_MW_BASE_URL || `${internalServiceProtocol}://knowledge-mw-service:5000`,
     ENABLE_AI_SEARCH: env.ENABLE_AI_SEARCH || 'true',
-    ENABLED_SSO_PROVIDERS: parseEnabledProviders(env.ENABLED_SSO_PROVIDERS || '["google"]'),
+    ENABLED_SSO_PROVIDERS: parseEnabledProviders(env.ENABLED_SSO_PROVIDERS || '[]'),
     // Comma-separated list of extra origins allowed by CORS (in addition to the
     // dev frontend URL and the mobile webview origins wired up in app.ts).
     CORS_ALLOWED_ORIGINS: env.CORS_ALLOWED_ORIGINS || '',
