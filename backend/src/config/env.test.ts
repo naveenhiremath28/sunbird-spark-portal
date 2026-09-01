@@ -28,13 +28,24 @@ describe('env.ts — ENABLED_SSO_PROVIDERS parsing', () => {
         expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('Invalid ENABLED_SSO_PROVIDERS value'));
     });
 
-    it('falls back to [] when parsed value is valid JSON but not an array', async () => {
-        vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    it('falls back to [] and logs an error when parsed value is valid JSON but not an array', async () => {
+        const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
         process.env.ENABLED_SSO_PROVIDERS = '{"provider":"google"}';
 
         const { envConfig } = await import('./env.js');
 
         expect(envConfig.ENABLED_SSO_PROVIDERS).toEqual([]);
+        expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('Invalid ENABLED_SSO_PROVIDERS value'));
+    });
+
+    it('falls back to [] and logs an error when value is a valid JSON number', async () => {
+        const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+        process.env.ENABLED_SSO_PROVIDERS = '5';
+
+        const { envConfig } = await import('./env.js');
+
+        expect(envConfig.ENABLED_SSO_PROVIDERS).toEqual([]);
+        expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('Invalid ENABLED_SSO_PROVIDERS value'));
     });
 
     it('parses a valid JSON array as-is (registry validation happens elsewhere)', async () => {

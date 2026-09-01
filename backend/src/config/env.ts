@@ -10,7 +10,11 @@ const env = process.env;
 const parseEnabledProviders = (raw: string): string[] => {
     try {
         const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
+        if (!Array.isArray(parsed)) {
+            console.error(`Invalid ENABLED_SSO_PROVIDERS value, falling back to no SSO providers: "${raw}"`);
+            return [];
+        }
+        return parsed;
     } catch {
         console.error(`Invalid ENABLED_SSO_PROVIDERS value, falling back to no SSO providers: "${raw}"`);
         return [];
