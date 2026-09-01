@@ -29,15 +29,15 @@ describe('validateSsoConfig', () => {
         expect(mockLoggerError).not.toHaveBeenCalled();
     });
 
-    it('falls back to ["google"] when the list contains only unregistered providers', async () => {
+    it('drops to [] when the list contains only unregistered providers', async () => {
         const validateSsoConfig = await loadValidateSsoConfig(['microsoft']);
-        expect(validateSsoConfig()).toEqual(['google']);
+        expect(validateSsoConfig()).toEqual([]);
         expect(mockLoggerError).toHaveBeenCalledWith(expect.stringContaining('microsoft'));
     });
 
-    it('falls back to ["google"] when the list contains an unknown/bogus provider', async () => {
+    it('drops to [] when the list contains an unknown/bogus provider', async () => {
         const validateSsoConfig = await loadValidateSsoConfig(['bogus']);
-        expect(validateSsoConfig()).toEqual(['google']);
+        expect(validateSsoConfig()).toEqual([]);
         expect(mockLoggerError).toHaveBeenCalledWith(expect.stringContaining('bogus'));
     });
 

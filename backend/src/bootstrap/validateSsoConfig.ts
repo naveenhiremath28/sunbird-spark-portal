@@ -6,11 +6,11 @@ let validatedSsoProviders: string[] | null = null;
 
 /**
  * Validates envConfig.ENABLED_SSO_PROVIDERS against the ssoProviders registry,
- * dropping (and logging) any unregistered provider name. A deliberately empty
- * list is preserved as-is (disables all SSO providers); the ['google']
- * fallback only applies when the configured list was non-empty but every
- * entry was unregistered/bogus. Memoized — call once at startup, reuse
- * the result for route gating and appInfoController.
+ * dropping (and logging) any unregistered provider name. An empty list —
+ * whether configured that way deliberately, or because every configured
+ * entry was unregistered/bogus — results in all SSO providers disabled.
+ * Memoized — call once at startup, reuse the result for route gating and
+ * appInfoController.
  */
 export const validateSsoConfig = (): string[] => {
     if (validatedSsoProviders) {
@@ -32,6 +32,6 @@ export const validateSsoConfig = (): string[] => {
         return true;
     });
 
-    validatedSsoProviders = valid.length > 0 ? valid : ['google'];
+    validatedSsoProviders = valid.length > 0 ? valid : [];
     return validatedSsoProviders;
 };
