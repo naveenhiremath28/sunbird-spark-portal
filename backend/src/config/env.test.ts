@@ -12,10 +12,10 @@ describe('env.ts — ENABLED_SSO_PROVIDERS parsing', () => {
         process.env = { ...ORIGINAL_ENV };
     });
 
-    it('defaults to ["google"] when unset', async () => {
+    it('defaults to [] when unset', async () => {
         delete process.env.ENABLED_SSO_PROVIDERS;
         const { envConfig } = await import('./env.js');
-        expect(envConfig.ENABLED_SSO_PROVIDERS).toEqual(['google']);
+        expect(envConfig.ENABLED_SSO_PROVIDERS).toEqual([]);
     });
 
     it('falls back to ["google"] and logs an error on malformed JSON', async () => {

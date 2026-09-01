@@ -41,9 +41,9 @@ describe('validateSsoConfig', () => {
         expect(mockLoggerError).toHaveBeenCalledWith(expect.stringContaining('bogus'));
     });
 
-    it('falls back to ["google"] when the list is empty', async () => {
+    it('preserves a deliberately empty list (disables all SSO providers)', async () => {
         const validateSsoConfig = await loadValidateSsoConfig([]);
-        expect(validateSsoConfig()).toEqual(['google']);
+        expect(validateSsoConfig()).toEqual([]);
     });
 
     it('drops unregistered entries but keeps registered ones from a mixed list', async () => {
