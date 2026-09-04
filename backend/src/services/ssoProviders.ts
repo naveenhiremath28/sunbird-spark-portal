@@ -1,5 +1,6 @@
 import { envConfig } from '../config/env.js';
 import { buildGoogleAuthUrl, exchangeGoogleCode } from './googleAuthService.js';
+import { buildMicrosoftAuthUrl, exchangeMicrosoftCode } from './microsoftAuthService.js';
 
 interface SsoProviderAdapter {
     buildAuthUrl(state: string, codeChallenge: string): string;
@@ -14,5 +15,11 @@ export const ssoProviders: Record<string, SsoProviderAdapter> = {
         exchangeCode: exchangeGoogleCode,
         keycloakClientId: envConfig.KEYCLOAK_GOOGLE_CLIENT_ID,
         keycloakClientSecret: envConfig.KEYCLOAK_GOOGLE_CLIENT_SECRET,
+    },
+    microsoft: {
+        buildAuthUrl: buildMicrosoftAuthUrl,
+        exchangeCode: exchangeMicrosoftCode,
+        keycloakClientId: envConfig.KEYCLOAK_MICROSOFT_CLIENT_ID,
+        keycloakClientSecret: envConfig.KEYCLOAK_MICROSOFT_CLIENT_SECRET,
     },
 };
